@@ -92,9 +92,17 @@
             console.log(backData);
             if (backData.code == 200) {
               // alert('登录成功');
+              //登录成功之后，将用户的token存储到localStorage
+              localStorage.setItem('token', backData.token);
+              //(1)设置模态框提示文本
               $('.modal-body>p').text(backData.msg);
               $('#myModal').modal();
-              window.location.href = './index.html';
+              //(2)给模态框注册隐藏事件
+              $('#myModal').on('hidden.bs.modal', function (e) {
+                // do something...
+                //跳转首页
+                window.location.href = './index.html';
+              })
             } else {
               // alert(backData.msg);
               //(1)设置模态框提示文本

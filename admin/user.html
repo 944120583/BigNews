@@ -63,6 +63,57 @@
             </form>
         </div>
     </div>
+
+    <script src="./js/https.js"></script>
+    <script>
+        //入口函数
+        $(function () {
+            /* 1.页面一加载：请求用户详细信息，渲染页面 */
+            $.ajax({
+                url: BigNew.user_detail,
+                type: 'get',
+                dataType: 'json',
+                success: function (backData) {
+                    console.log(backData);
+                    $('.user_pic').attr('src', backData.userPic);
+                    for (var key in backData.data) {
+                        console.log(key, backData.data[key]);
+                        $('input.' + key).val(backData.data[key]);
+                    }
+                }
+            });
+            /* 2.文件预览：固定四个步骤 */
+            //1.给file表单元素注册onchange事件
+            $('#exampleInputFile').change(function () {
+                var file = this.file[0];
+                var url = URL.createObjectURL(file);
+                $('.user_pic').attr('src', url);
+
+            });
+            /* 3.修改个人信息：FormData提交文件*/
+            $('.btn-edit').on('click', function (e) {
+                e.preventDefault();
+                var fd = new FormData($('#form')[0])
+                $.ajax({
+                    url: BigNew.user_edit,
+                    type: 'post',
+                    dataType: 'json',
+                    data: fd,
+                    contentType: false,
+                    processData: false,
+                    success: function (backData) {
+                        if(backData.code==200){
+                            alert('修改成功');
+                            window.parent.location.reload();
+                        }
+                    }
+                });
+            });
+        });
+       
+
+
+    </script>
 </body>
 
 </html>
