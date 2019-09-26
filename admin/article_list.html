@@ -201,6 +201,15 @@
                     }
                 });
             });
+
+            /* 6.点击发布文章，设置左侧导航栏 发布文章 高亮 */
+            $('#release_btn').click(function () {
+            /*
+            $(选择器,DOM) ： 默认第二个参数就是当前页面的DOM树
+            $(选择器,window.parent.document) : 选择父窗口的元素
+             */
+                $('.level02>li:eq(1)', window.parent.document).addClass('active').siblings().removeClass('active');
+            })
         });
 
     </script>
